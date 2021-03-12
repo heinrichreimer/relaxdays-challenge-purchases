@@ -1,7 +1,6 @@
-# 🧑‍💻 relaxdays-challenge
+# 🧑‍💻 relaxdays-challenge-purchases
 
-Template project for tasks of the Relaxdays Code Challenge Vol. 1.
-Replace `<PORT>` and `<COMMAND>` with appropriate values after forking.
+Server for managing purchases.
 
 This project was created in the Relaxdays Code Challenge Vol. 1.
 See the [hackathon homepage](https://sites.google.com/relaxdays.de/hackathon-relaxdays/startseite) for more information.
@@ -12,8 +11,8 @@ My participant ID in the challenge was: `CC-VOL1-54`
 First you need to clone this repository:
 
 ```shell script
-git clone https://github.com/heinrichreimer/relaxdays-challenge.git
-cd relaxdays-challenge/
+git clone https://github.com/heinrichreimer/relaxdays-challenge-purchases.git
+cd relaxdays-challenge-purchases/
 ```
 
 ### Docker container
@@ -22,16 +21,16 @@ cd relaxdays-challenge/
 1. Build a Docker container with this project:
 
     ```shell script
-    docker build -t relaxdays-challenge .
+    docker build -t relaxdays-challenge-purchases .
     ```
 
 1. Start the Docker container:
 
     ```shell script
-    docker run -v $(pwd):/app -p <PORT>:<PORT> -it relaxdays-challenge
+    docker run -v $(pwd):/app -p 5000:5000 -it relaxdays-challenge-purchases
     ```
 
-1. The app is now running on [`localhost:<PORT>`](http://localhost:<PORT>/)
+1. The app is now running on [`localhost:5000`](http://localhost:5000/)
 
 ### Local machine
 
@@ -45,10 +44,10 @@ cd relaxdays-challenge/
 1. Run the notebook:
 
     ```shell script
-    pipenv run <COMMAND>
+    pipenv run python server.py
     ```
 
-1. The app is now running on [`localhost:<PORT>`](http://localhost:<PORT>/)
+1. The app is now running on [`localhost:5000`](http://localhost:5000/)
 
 ## License
 
