@@ -1,0 +1,22 @@
+Get all purchases from the store.
+---
+responses:
+  default:
+    description: "List of purchases."
+    schema:
+      type: "array"
+      items:
+        $ref: "#/definitions/Purchase"
+definitions:
+  Purchase:
+    type: object
+    properties:
+      lieferant:
+        type: string
+        example: "XYZ Productions Ltd."
+      articleID:
+        type: integer
+        example: 10010020
+      menge:
+        type: integer
+        example: 20

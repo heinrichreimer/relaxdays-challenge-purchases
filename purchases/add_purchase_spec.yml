@@ -1,0 +1,25 @@
+Add a new purchase to the store.
+---
+parameters:
+  - name: body
+    in: body
+    required: true
+    description: "Purchase that should be added."
+    schema:
+      $ref: "#/definitions/Purchase"
+responses:
+  default:
+    description: "Successful operation."
+definitions:
+  Purchase:
+    type: object
+    properties:
+      lieferant:
+        type: string
+        example: "XYZ Productions Ltd."
+      articleID:
+        type: integer
+        example: 10010020
+      menge:
+        type: integer
+        example: 20
