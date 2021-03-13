@@ -1,5 +1,12 @@
 Get all purchases from the store.
 ---
+parameters:
+  - name: body
+    in: body
+    required: true
+    description: "Article ID for filtering."
+    schema:
+      type: integer
 responses:
   default:
     description: "List of purchases."
