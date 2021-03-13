@@ -8,7 +8,7 @@ swagger = Swagger(app)
 purchases: List[Purchase] = []
 
 
-@app.route("/", methods=["POST"])
+@app.route("/purchase", methods=["POST"])
 @swag_from("add_purchase_spec.yml", validation=True)
 def add_purchase():
     purchase = Purchase(
@@ -20,7 +20,7 @@ def add_purchase():
     return ""
 
 
-@app.route("/", methods=["GET"])
+@app.route("/purchases", methods=["GET"])
 @swag_from("get_purchases_spec.yml")
 def get_purchases():
     results = [
