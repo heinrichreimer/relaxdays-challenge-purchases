@@ -1,8 +1,8 @@
 Get all purchases from the store.
 ---
 parameters:
-  - name: body
-    in: body
+  - name: articleID
+    in: path
     required: true
     description: "Article ID for filtering."
     schema:
