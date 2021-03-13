@@ -1,5 +1,13 @@
-Get all purchases from the store.
+Get all purchases containing a specific article.
 ---
+parameters:
+  - name: x
+    in: query
+    required: true
+    description: "Article ID for filtering."
+    schema:
+      type: integer
+      example: 10010020
 responses:
   default:
     description: "List of purchases."
@@ -10,6 +18,10 @@ responses:
 definitions:
   Purchase:
     type: object
+    required:
+      - lieferant
+      - articleID
+      - menge
     properties:
       lieferant:
         type: string

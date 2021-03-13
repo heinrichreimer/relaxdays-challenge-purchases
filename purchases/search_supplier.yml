@@ -1,0 +1,18 @@
+Search for suppliers.
+---
+parameters:
+  - name: x
+    in: query
+    required: true
+    description: "Query to search for."
+    schema:
+      type: integer
+      example: "xyz prodcutoins ltd"
+responses:
+  default:
+    description: "List of purchases."
+    schema:
+      type: array
+      items:
+        type: string
+        example: "XYZ Productions Ltd."

@@ -1,22 +1,22 @@
-Get all purchases from the store.
+Add a new purchase.
 ---
 parameters:
-  - name: articleID
-    in: path
+  - name: body
+    in: body
     required: true
-    description: "Article ID for filtering."
+    description: "Purchase that should be added."
     schema:
-      type: integer
+      $ref: "#/definitions/Purchase"
 responses:
   default:
-    description: "List of purchases."
-    schema:
-      type: array
-      items:
-        $ref: "#/definitions/Purchase"
+    description: "Successful operation."
 definitions:
   Purchase:
     type: object
+    required:
+      - lieferant
+      - articleID
+      - menge
     properties:
       lieferant:
         type: string

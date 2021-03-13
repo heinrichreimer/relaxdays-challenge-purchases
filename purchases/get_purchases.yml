@@ -1,18 +1,19 @@
-Add a new purchase to the store.
+Get all purchases.
 ---
-parameters:
-  - name: body
-    in: body
-    required: true
-    description: "Purchase that should be added."
-    schema:
-      $ref: "#/definitions/Purchase"
 responses:
   default:
-    description: "Successful operation."
+    description: "List of purchases."
+    schema:
+      type: array
+      items:
+        $ref: "#/definitions/Purchase"
 definitions:
   Purchase:
     type: object
+    required:
+      - lieferant
+      - articleID
+      - menge
     properties:
       lieferant:
         type: string
