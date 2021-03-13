@@ -69,19 +69,23 @@ def search_supplier():
     query = request.args["x"]
 
     result = purchases
+    result = set(map(
+        lambda purchase: purchase.supplier,
+        result
+    ))
     result = list(map(
-        lambda purchase: [levenshtein(purchase.supplier, query), purchase],
+        lambda supplier: [levenshtein(supplier, query), supplier],
         result
     ))
     result = list(filter(
-        lambda dist_purchase: dist_purchase[0] <= 10,
+        lambda dist_supplier: dist_supplier[0] <= 10,
         result
     ))
     result.sort(
-        key=lambda dist_purchase: dist_purchase[0],
+        key=lambda dist_supplier: dist_supplier[0],
     )
     result = list(map(
-        lambda dist_purchase: dist_purchase[1].supplier,
+        lambda dist_supplier: dist_supplier[1],
         result
     ))
     return jsonify(result)
