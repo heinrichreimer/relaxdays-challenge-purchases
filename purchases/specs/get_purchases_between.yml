@@ -1,0 +1,42 @@
+Get all purchases between specific times.
+Start and end times are inclusive.
+---
+parameters:
+  - name: x
+    in: query
+    required: true
+    description: "Start time and date."
+    schema:
+      type: string
+      example: "13.03.2021 13:59:58"
+  - name: y
+    in: query
+    required: true
+    description: "End time and date."
+    schema:
+      type: string
+      example: "20.03.2021 15:59:58"
+responses:
+  default:
+    description: "List of purchases in the date range."
+    schema:
+      type: array
+      items:
+        $ref: "#/definitions/Purchase"
+definitions:
+  Purchase:
+    type: object
+    required:
+      - lieferant
+      - articleID
+      - menge
+    properties:
+      lieferant:
+        type: string
+        example: "XYZ Productions Ltd."
+      articleID:
+        type: integer
+        example: 10010020
+      menge:
+        type: integer
+        example: 20

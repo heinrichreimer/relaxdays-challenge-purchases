@@ -3,6 +3,7 @@ from flasgger import Swagger, swag_from
 from typing import List, Dict
 from purchases.purchase import Purchase
 from distance import levenshtein
+from datetime import datetime
 
 app = Flask(__name__)
 swagger = Swagger(app)
@@ -15,6 +16,7 @@ def dict_to_purchase(purchase: Dict) -> Purchase:
         purchase["lieferant"],
         purchase["articleID"],
         purchase["menge"],
+        datetime.now()
     )
 
 
@@ -27,14 +29,14 @@ def purchase_to_dict(purchase: Purchase) -> Dict:
 
 
 @app.route("/purchase", methods=["POST"])
-@swag_from("./add_purchase.yml", validation=True)
+@swag_from("./specs/add_purchase.yml", validation=True)
 def add_purchase():
     purchases.append(dict_to_purchase(request.json))
     return ""
 
 
 @app.route("/purchases", methods=["GET"])
-@swag_from("./get_purchases.yml")
+@swag_from("./specs/get_purchases.yml")
 def get_purchases():
     result = purchases
     result = list(map(purchase_to_dict, result))
@@ -42,7 +44,7 @@ def get_purchases():
 
 
 @app.route("/purchasesForArticle", methods=["GET"])
-@swag_from("./get_purchases_for_article.yml")
+@swag_from("./specs/get_purchases_for_article.yml")
 def get_purchases_for_article():
     if "x" not in request.args:
         return Response("Must specify article ID.", status=400)
@@ -57,7 +59,7 @@ def get_purchases_for_article():
 
 
 @app.route("/searchLieferant", methods=["GET"])
-@swag_from("./search_supplier.yml")
+@swag_from("./specs/search_supplier.yml")
 def search_supplier():
     if "x" not in request.args:
         return Response("Must specify query.", status=400)
@@ -79,4 +81,25 @@ def search_supplier():
         lambda dist_purchase: dist_purchase[1].supplier,
         result
     ))
+    return jsonify(result)
+
+
+@app.route("/purchasesBetween", methods=["GET"])
+@swag_from("./specs/get_purchases_between.yml")
+def get_purchases_between():
+    if "x" not in request.args:
+        return Response("Must specify start date.", status=400)
+    start_time = datetime.strptime(request.args["x"], "%d.%m.%Y %H:%M:%S")
+
+    if "y" not in request.args:
+        return Response("Must specify start date.", status=400)
+    end_time = datetime.strptime(request.args["y"], "%d.%m.%Y %H:%M:%S")
+
+    result = purchases
+    result = list(filter(
+        lambda purchase: purchase.time >= start_time and
+        purchase.time <= end_time,
+        result
+    ))
+    result = list(map(purchase_to_dict, result))
     return jsonify(result)
