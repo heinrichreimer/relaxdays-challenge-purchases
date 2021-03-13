@@ -8,6 +8,8 @@ flasgger = "*"
 flask = "*"
 flake8 = "*"
 autopep8 = "*"
+pylint = "*"
+distance = "*"
 
 [dev-packages]
 
