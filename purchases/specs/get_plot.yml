@@ -1,0 +1,20 @@
+Get a plot of the given article's item price over time.
+---
+produces:
+  - image/png
+parameters:
+  - name: x
+    in: query
+    required: true
+    description: "Article ID for filtering."
+    schema:
+      type: integer
+      example: 10010020
+responses:
+  default:
+    description: "Plot with item prices over time."
+    content:
+      image/png:
+        schema:
+          type: string
+          format: binary

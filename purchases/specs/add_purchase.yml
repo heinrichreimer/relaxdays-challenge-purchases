@@ -1,5 +1,7 @@
 Add a new purchase.
 ---
+consumes:
+  - application/json
 parameters:
   - name: body
     in: body

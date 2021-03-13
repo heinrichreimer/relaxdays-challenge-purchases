@@ -10,6 +10,7 @@ flake8 = "*"
 autopep8 = "*"
 pylint = "*"
 distance = "*"
+matplotlib = "*"
 
 [dev-packages]
 

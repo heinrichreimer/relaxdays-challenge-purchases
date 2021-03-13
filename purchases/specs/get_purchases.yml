@@ -1,5 +1,7 @@
 Get all purchases.
 ---
+produces:
+  - application/json
 responses:
   default:
     description: "List of purchases."

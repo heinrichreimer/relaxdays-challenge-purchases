@@ -1,6 +1,8 @@
 Get all purchases between specific times.
 Start and end times are inclusive.
 ---
+produces:
+  - application/json
 parameters:
   - name: x
     in: query

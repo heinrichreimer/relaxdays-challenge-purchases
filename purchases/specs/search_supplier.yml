@@ -1,5 +1,7 @@
 Search for suppliers.
 ---
+produces:
+  - application/json
 parameters:
   - name: x
     in: query

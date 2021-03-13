@@ -10,3 +10,7 @@ class Purchase:
     amount: int
     price: Decimal
     time: datetime
+
+    @property
+    def item_price(self):
+        return self.price / self.amount

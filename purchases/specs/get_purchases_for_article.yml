@@ -1,5 +1,7 @@
 Get all purchases containing a specific article.
 ---
+produces:
+  - application/json
 parameters:
   - name: x
     in: query

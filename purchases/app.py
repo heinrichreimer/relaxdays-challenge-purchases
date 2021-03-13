@@ -1,10 +1,14 @@
-from flask import Flask, jsonify, request, Response
+from flask import Flask, jsonify, request, Response, send_file
 from flasgger import Swagger, swag_from
 from typing import List, Dict
 from purchases.purchase import Purchase
 from distance import levenshtein
 from datetime import datetime
 from decimal import Decimal
+from pathlib import Path
+from matplotlib.figure import Figure
+from matplotlib.axes import Axes
+from matplotlib.pyplot import subplots
 
 app = Flask(__name__)
 swagger = Swagger(app)
@@ -110,3 +114,32 @@ def get_purchases_between():
     ))
     result = list(map(purchase_to_dict, result))
     return jsonify(result)
+
+
+@app.route("/plot", methods=["GET"])
+@swag_from("./specs/get_plot.yml")
+def get_plot():
+    print("Plot")
+    if "x" not in request.args:
+        return Response("Must specify article ID.", status=400)
+    article_id = int(request.args["x"])
+
+    result = purchases
+    result = list(filter(
+        lambda purchase: purchase.article_id == article_id, result
+    ))
+
+    # Create plot.
+    x = [purchase.time for purchase in result]
+    y = [purchase.item_price for purchase in result]
+    fig, ax = subplots()
+    fig: Figure
+    ax: Axes
+    ax.plot(x, y)
+    ax.set_xlabel("Time")
+    ax.set_ylabel("Item price in EUR")
+
+    # Save to file and return.
+    png = Path(__file__).parent / "plot.png"
+    fig.savefig(png)
+    return send_file(png, mimetype="image/png", cache_timeout=0)
