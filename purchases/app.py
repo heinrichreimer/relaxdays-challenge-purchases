@@ -4,6 +4,7 @@ from typing import List, Dict
 from purchases.purchase import Purchase
 from distance import levenshtein
 from datetime import datetime
+from decimal import Decimal
 
 app = Flask(__name__)
 swagger = Swagger(app)
@@ -16,6 +17,7 @@ def dict_to_purchase(purchase: Dict) -> Purchase:
         purchase["lieferant"],
         purchase["articleID"],
         purchase["menge"],
+        Decimal(purchase["preis"]),
         datetime.now()
     )
 
@@ -25,6 +27,7 @@ def purchase_to_dict(purchase: Purchase) -> Dict:
         "lieferant": purchase.supplier,
         "articleID": purchase.article_id,
         "menge": purchase.amount,
+        "preis": str(purchase.price),
     }
 
 

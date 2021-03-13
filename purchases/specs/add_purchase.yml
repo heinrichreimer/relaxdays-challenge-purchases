@@ -17,6 +17,7 @@ definitions:
       - lieferant
       - articleID
       - menge
+      - preis
     properties:
       lieferant:
         type: string
@@ -27,3 +28,8 @@ definitions:
       menge:
         type: integer
         example: 20
+      preis:
+        # Unfortunately, OpenAPI has no decimal type.
+        type: string
+        pattern: '^\d+(\.\d+)?$'
+        example: "4499.99"
