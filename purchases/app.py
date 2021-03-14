@@ -9,6 +9,7 @@ from pathlib import Path
 from matplotlib.figure import Figure
 from matplotlib.axes import Axes
 from matplotlib.pyplot import subplots
+from itertools import groupby
 
 app = Flask(__name__)
 swagger = Swagger(app)
@@ -143,3 +144,42 @@ def get_plot():
     png = Path(__file__).parent / "plot.png"
     fig.savefig(png)
     return send_file(png, mimetype="image/png", cache_timeout=0)
+
+
+@app.route("/articlesForLieferant", methods=["GET"])
+@swag_from("./specs/get_articles_for_supplier.yml")
+def get_articles_for_supplier():
+    if "x" not in request.args:
+        return Response("Must specify supplier.", status=400)
+    supplier = request.args["x"]
+
+    result = purchases
+    result = list(filter(
+        lambda purchase: purchase.supplier == supplier,
+        result
+    ))
+
+    def last_purchase(purchases: List[Purchase]) -> Purchase:
+        purchases.sort(
+            key=lambda purchase: purchase.time,
+            reverse=True
+        )
+        return purchases[0]
+
+    def criteria(purchase: Purchase):
+        return purchase.article_id
+
+    result.sort(key=criteria)
+    result = [
+        last_purchase(list(group))
+        for key, group in groupby(result, key=criteria)
+    ]
+
+    result.sort(
+        key=lambda purchase: purchase.item_price,
+    )
+    result = list(map(
+        lambda purchase: purchase.article_id,
+        result
+    ))
+    return jsonify(result)

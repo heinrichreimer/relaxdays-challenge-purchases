@@ -1,0 +1,20 @@
+Get a sorted list of all articles purchased from a specific supplier.
+---
+produces:
+  - application/json
+parameters:
+  - name: x
+    in: query
+    required: true
+    description: "Supplier name for filtering."
+    schema:
+      type: string
+      example: "XYZ Productions Ltd."
+responses:
+  default:
+    description: "List of articles."
+    schema:
+      type: array
+      items:
+        type: integer
+        example: 10010020
